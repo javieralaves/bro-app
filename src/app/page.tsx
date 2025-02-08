@@ -74,7 +74,6 @@ function generateNewSuggestions(lastMessage: string) {
 export default function Home() {
   const [conversations, setConversations] = useState<Match[]>(mockConversations);
   const [activeConversationId, setActiveConversationId] = useState<string | null>(null);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [pendingResponses, setPendingResponses] = useState<Set<string>>(new Set());
 
   const activeConversation = conversations.find(c => c.id === activeConversationId);
@@ -157,14 +156,10 @@ export default function Home() {
       timestamp: new Date().toISOString(),
       status: 'sent'
     });
-
-    setIsSidebarOpen(false);
   };
 
   const handleConversationSelect = (id: string) => {
     setActiveConversationId(id);
-    // Close sidebar on mobile after selecting a conversation
-    setIsSidebarOpen(false);
   };
 
   return (
