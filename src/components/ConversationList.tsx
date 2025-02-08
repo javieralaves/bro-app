@@ -14,9 +14,9 @@ function ConversationList({
   onConversationSelect 
 }: ConversationListProps) {
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col bg-white">
       <div className="p-4 border-b border-gray-200">
-        <h2 className="text-lg font-semibold">Conversations</h2>
+        <h2 className="text-xl font-semibold">Messages</h2>
       </div>
       
       <div className="flex-1 overflow-y-auto">

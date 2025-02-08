@@ -168,72 +168,38 @@ export default function Home() {
   };
 
   return (
-    <div className="h-screen relative flex bg-gray-50">
-      {/* Overlay for mobile */}
-      {isSidebarOpen && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden"
-          onClick={() => setIsSidebarOpen(false)}
-        />
-      )}
-
-      {/* Sidebar */}
-      <div 
-        className={`
-          fixed lg:static inset-y-0 left-0 z-30
-          w-80 bg-white border-r border-gray-200
-          transform transition-transform duration-200 ease-in-out
-          ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-        `}
-      >
+    <div className="h-screen flex bg-gray-50">
+      {/* Desktop sidebar - hidden on mobile unless conversation is not selected */}
+      <div className={`
+        ${!activeConversationId ? 'w-full' : 'hidden'} 
+        lg:block lg:w-80 lg:border-r lg:border-gray-200
+      `}>
         <ConversationList 
           conversations={conversations}
           activeConversationId={activeConversationId}
           onConversationSelect={handleConversationSelect}
         />
       </div>
-      
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col min-w-0">
-        {!activeConversation ? (
-          <div className="h-full flex flex-col items-center justify-center p-4 text-center text-gray-500">
-            {/* Mobile menu button */}
-            <button
-              onClick={() => setIsSidebarOpen(true)}
-              className="absolute top-4 left-4 p-2 lg:hidden"
-            >
-              <MenuIcon />
-            </button>
-            <p>Select a conversation to start</p>
-          </div>
-        ) : (
+
+      {/* Main content area - full width on mobile when conversation selected */}
+      <div className={`
+        ${activeConversationId ? 'w-full' : 'hidden lg:block'} 
+        lg:flex-1
+      `}>
+        {activeConversation ? (
           <ConversationView 
             key={activeConversation.id}
             match={activeConversation}
             onSuggestionSelect={handleSuggestionSelect}
-            onMenuClick={() => setIsSidebarOpen(true)}
-            isWaitingForResponse={pendingResponses.has(activeConversation.id)}
+            onBackClick={() => setActiveConversationId(null)}
+            isWaitingForResponse={pendingResponses.has(activeConversationId)}
           />
+        ) : (
+          <div className="hidden lg:flex h-full items-center justify-center p-4 text-center text-gray-500">
+            <p>Select a conversation to start</p>
+          </div>
         )}
       </div>
     </div>
-  );
-}
-
-function MenuIcon() {
-  return (
-    <svg 
-      className="w-6 h-6" 
-      fill="none" 
-      stroke="currentColor" 
-      viewBox="0 0 24 24"
-    >
-      <path 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
-        strokeWidth={2} 
-        d="M4 6h16M4 12h16M4 18h16" 
-      />
-    </svg>
   );
 }

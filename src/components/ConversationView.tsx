@@ -6,14 +6,14 @@ import { useState } from 'react';
 interface ConversationViewProps {
   match: Match;
   onSuggestionSelect: (suggestionId: string) => void;
-  onMenuClick: () => void;
+  onBackClick: () => void;
   isWaitingForResponse: boolean;
 }
 
 function ConversationView({ 
   match, 
   onSuggestionSelect, 
-  onMenuClick,
+  onBackClick,
   isWaitingForResponse 
 }: ConversationViewProps) {
   const [selectedSuggestion, setSelectedSuggestion] = useState<string | null>(null);
@@ -24,15 +24,16 @@ function ConversationView({
   };
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-screen flex flex-col">
       {/* Header */}
       <div className="p-4 border-b border-gray-200 bg-white">
         <div className="flex items-center gap-3">
+          {/* Back button - only show on mobile */}
           <button
-            onClick={onMenuClick}
+            onClick={onBackClick}
             className="p-2 -ml-2 lg:hidden"
           >
-            <MenuIcon />
+            <BackIcon />
           </button>
           <img
             src={match.profilePicture}
@@ -143,7 +144,7 @@ function StatusBadge({ status }: { status: Match['status'] }) {
   );
 }
 
-function MenuIcon() {
+function BackIcon() {
   return (
     <svg 
       className="w-6 h-6" 
@@ -155,7 +156,7 @@ function MenuIcon() {
         strokeLinecap="round" 
         strokeLinejoin="round" 
         strokeWidth={2} 
-        d="M4 6h16M4 12h16M4 18h16" 
+        d="M15 19l-7-7 7-7" 
       />
     </svg>
   );
