@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import ConversationList from '@/components/ConversationList';
 import ConversationView from '@/components/ConversationView';
 import { mockConversations } from '@/data/mockData';
