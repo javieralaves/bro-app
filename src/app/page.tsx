@@ -187,7 +187,7 @@ export default function Home() {
             match={activeConversation}
             onSuggestionSelect={handleSuggestionSelect}
             onBackClick={() => setActiveConversationId(null)}
-            isWaitingForResponse={pendingResponses.has(activeConversationId)}
+            isWaitingForResponse={activeConversationId ? pendingResponses.has(activeConversationId) : false}
           />
         ) : (
           <div className="hidden lg:flex h-full items-center justify-center p-4 text-center text-gray-500">
